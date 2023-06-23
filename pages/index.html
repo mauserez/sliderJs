@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<link rel="stylesheet" href="../assets/css/font.css" />
+		<title>Design Studio</title>
+		<link
+			type="image/x-icon"
+			href="/assets/icons/header/logo.svg"
+			rel="shortcut icon"
+		/>
+		<link type="Image/x-icon" href="/assets/icons/header/logo.svg" rel="icon" />
+		<link rel="stylesheet" href="../assets/css/reset.css" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="../assets/css/projects.css" />
+	</head>
+	<body>
+		<main>
+			<section id="projects" class="bg-black">
+				<div class="section-content projects">
+					<div class="section-content__body">
+						<div class="projects__body">
+							<div class="projects__info-gallery">
+								<div class="projects__gallery-buttons-wrap">
+									<div class="projects__buttons-push">&nbsp;</div>
+									<div class="projects__buttons"></div>
+								</div>
+								<div>
+									<div class="projects__info">
+										<div class="projects__title">
+											Completed<br />
+											projects
+										</div>
+										<div class="projects__text">
+											Only a small part of the work performed by our company is
+											presented on the site. For 14 years on in the construction
+											market we have made happy more than 1000 families
+										</div>
+										<div class="projects__small-gallery bg-image"></div>
+										<div class="projects-details">
+											<div class="projects-details__sample">
+												<div>
+													<div class="projects-details__title">city:</div>
+													<div
+														class="projects-details__text projects__project-city"
+													></div>
+												</div>
+												<div>
+													<div class="projects-details__title">
+														apartment area:
+													</div>
+													<div
+														class="projects-details__text projects__project-size"
+													></div>
+												</div>
+												<div>
+													<div class="projects-details__title">
+														Repair time:
+													</div>
+													<div
+														class="projects-details__text projects__project-repair-time"
+													></div>
+												</div>
+												<div>
+													<div class="projects-details__title">
+														Repair Cost:
+													</div>
+													<div
+														class="projects-details__text projects__project-repair-cost"
+													></div>
+												</div>
+											</div>
+											<div class="projects__big-slider-buttons color-white">
+												<img
+													onclick="slider.prev()"
+													src="/assets/icons/big_slider/prev.svg"
+												/>
+												<div class="projects__big-slider-dots"></div>
+												<img
+													onclick="slider.next()"
+													src="/assets/icons/big_slider/next.svg"
+												/>
+											</div>
+										</div>
+									</div>
+									<div class="projects__gallery">
+										<div class="projects__gallery-photo bg-image"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<div id="scroll-top" class="scroll-top">
+				<a href="#header">
+					<i class="bi bi-arrow-up"></i>
+				</a>
+			</div>
+
+			<script>
+				let scroller = document.getElementById("scroll-top");
+
+				window.addEventListener("scroll", (e) => {
+					scroller.style.opacity = window.scrollY > 1000 ? "100" : "0";
+				});
+			</script>
+		</main>
+	</body>
+</html>
+
+<script>
+	let designImages = [
+		"rostov-admiral-1.png",
+		"rostov-admiral-2.png",
+		"rostov-admiral-3.png",
+	];
+
+	let designProjects = [
+		{
+			projectId: "rostov_admiral",
+			projectName: "Rostov-on-Don, Admiral",
+			projectOptions: {
+				size: "81 m2",
+				city: `Rostov-on-Dons <br /> LCD admiral`,
+				repairTime: "2.5 months",
+				repairCost: "3000 $",
+				description: `The Rostov Admiral is very comfortable hotel!<br/>
+			For 14 years on in the construction market we have made happy more than 1000 families`,
+			},
+			images: [
+				"rostov-admiral-1.png",
+				"rostov-admiral-2.png",
+				"rostov-admiral-3.png",
+			],
+		},
+		{
+			projectId: "sochi-thieves",
+			projectName: "Sochi Thieves",
+
+			projectOptions: {
+				size: "101 m2",
+				city: "Sochi <br /> Thieves",
+				repairTime: "1.5 months",
+				repairCost: "Upon request",
+				description: `Only a small part of the work performed by our company is presented on the site.
+			For 14 years on in the construction market we have made happy more than 1000 families`,
+			},
+			images: ["rostov-patriotic-1.png", "rostov-admiral-2.png"],
+		},
+		{
+			projectId: "rostov_patriotic",
+			projectName: "Rostov-on-Don Patriotic",
+
+			projectOptions: {
+				size: "102 m2",
+				city: "Rostov-on-Don <br /> Patriotic",
+				repairTime: "4 months",
+				repairCost: "Upon request",
+				description: `The Rostov Patriotic is very comfortable hotel.
+			For 28 years on in the construction market we have made happy more than 1000 families`,
+			},
+			images: ["sochi-1.png", "sochi-2.png"],
+		},
+	];
+
+	const sliderJs = (options) => {
+		let sl = {};
+		const galleryPhoto = document.querySelector(".projects__gallery-photo");
+		const dotsContainer = document.querySelector(".projects__big-slider-dots");
+		const projectsButtons = document.querySelector(".projects__buttons");
+		const projectText = document.querySelector(".projects__text");
+		const projectCity = document.querySelector(".projects__project-city");
+		const projectSize = document.querySelector(".projects__project-size");
+		const projectRepairTime = document.querySelector(
+			".projects__project-repair-time"
+		);
+		const projectRepaiCost = document.querySelector(
+			".projects__project-repair-cost"
+		);
+
+		sl.options = options;
+
+		sl.currentProject = options[0];
+		sl.currentIndex = 0;
+		sl.currentGallery = sl.currentProject.images;
+		sl.dots = [];
+
+		sl.setCurrentGallery = () => {
+			sl.currentGallery = sl.currentProject.images;
+		};
+
+		sl.drawProjectsButtons = () => {
+			let projectsButtonsHtml = "";
+			sl.options.forEach((element, idx) => {
+				projectsButtonsHtml += `<div
+				class="projects__button
+				${idx === 0 ? "projects__button-active" : ""}
+				">
+					${element.projectId}
+				</div>`;
+				projectsButtons.innerHTML = projectsButtonsHtml;
+
+				sl.projectsButtons = document.querySelectorAll(".projects__button");
+				Array.from(sl.projectsButtons).forEach(function (el, idx) {
+					el.addEventListener("click", () => {
+						sl.setActiveProject(el, idx);
+					});
+				});
+			});
+		};
+
+		sl.setActiveProject = (el, idx) => {
+			[...el.parentElement.children].forEach((sib) =>
+				sib.classList.remove("projects__button-active")
+			);
+			el.classList.add("projects__button-active");
+			sl.currentProject = options[idx];
+
+			sl.setCurrentGallery();
+			sl.setProjectOptions();
+			sl.setGalleryImg(0);
+			sl.drawDots();
+		};
+
+		sl.setProjectOptions = () => {
+			projectText.innerHTML = sl.currentProject.projectOptions.description;
+			projectSize.innerHTML = sl.currentProject.projectOptions.size;
+			projectCity.innerHTML = sl.currentProject.projectOptions.city;
+			projectRepairTime.innerHTML = sl.currentProject.projectOptions.repairTime;
+			projectRepaiCost.innerHTML = sl.currentProject.projectOptions.repairCost;
+		};
+
+		sl.setGalleryImg = (index) => {
+			galleryPhoto.style.backgroundImage = `url(/assets/img/gallery/${sl.currentGallery[index]})`;
+		};
+
+		sl.drawDots = () => {
+			dotsContainer.innerHTML = "";
+			let dotsHtml = "";
+
+			if (sl.currentGallery.length > 1) {
+			}
+
+			sl.currentGallery.forEach((element, index) => {
+				let activeDot =
+					index === sl.currentIndex ? "projects__big-slider-dot-active" : "";
+
+				dotsHtml += `<div data-idx="${index}" class="projects__big-slider-dot ${activeDot}"></div>`;
+			});
+
+			dotsContainer.innerHTML = dotsHtml;
+
+			sl.dots = document.querySelectorAll(".projects__big-slider-dot");
+			Array.from(sl.dots).forEach(function (el, idx) {
+				el.addEventListener("click", () => {
+					sl.setActiveDot(el);
+					sl.setGalleryImg(idx);
+				});
+			});
+		};
+
+		sl.setActiveDot = (el) => {
+			[...el.parentElement.children].forEach((sib) =>
+				sib.classList.remove("projects__big-slider-dot-active")
+			);
+			el.classList.add("projects__big-slider-dot-active");
+		};
+
+		sl.prev = () => {
+			let idx = sl.currentIndex - 1;
+			if (sl.currentIndex === 0) {
+				idx = sl.currentGallery.length - 1;
+			}
+			sl.setActiveDot(sl.dots[idx]);
+			sl.setGalleryImg(idx);
+			sl.currentIndex = idx;
+		};
+
+		sl.next = () => {
+			let idx = sl.currentIndex + 1;
+			if (sl.currentIndex === sl.currentGallery.length - 1) {
+				idx = 0;
+			}
+			sl.setActiveDot(sl.dots[idx]);
+			sl.setGalleryImg(idx);
+			sl.currentIndex = idx;
+		};
+
+		sl.drawProjectsButtons();
+		sl.setProjectOptions();
+		sl.setGalleryImg(0);
+		sl.drawDots();
+
+		return sl;
+	};
+
+	const simpleSliderJs = (images) => {
+		let simpleSl = {};
+		const galleryPhotoSm = document.querySelector(".projects__small-gallery");
+		simpleSl.currentImg = 0;
+		simpleSl.currentIdx = images[simpleSl.currentIdx];
+		simpleSl.gallery = images;
+
+		simpleSl.setImg = (idx) => {
+			simpleSl.currentImg = images[idx];
+			simpleSl.currentIdx = idx;
+			galleryPhotoSm.style.backgroundImage = `url(/assets/img/gallery/${simpleSl.gallery[idx]})`;
+		};
+
+		simpleSl.drawButtons = () => {
+			let hiddenButton = "";
+
+			if (simpleSl.gallery.length === 1) {
+				hiddenButton = "hidden";
+			}
+
+			let buttonsHtml = `<img class="slider-icon sm-slider-prev prev ${hiddenButton}" alt="Предыдущая картинка"
+						 	src="/assets/icons/small_slider/prev.svg"/>
+							<img class="slider-icon sm-slider-next next ${hiddenButton}" alt="Следующая картинка"
+							src="/assets/icons/small_slider/next.svg"/>`;
+
+			galleryPhotoSm.innerHTML = buttonsHtml;
+			simpleSl.buttons = document.querySelectorAll(
+				".sm-slider-prev,.sm-slider-next"
+			);
+			console.log(simpleSl.buttons);
+			Array.from(simpleSl.buttons).forEach(function (el, idx) {
+				if (el.classList.contains("sm-slider-prev")) {
+					el.addEventListener("click", () => {
+						simpleSl.prev();
+					});
+				} else {
+					el.addEventListener("click", () => {
+						simpleSl.next();
+					});
+				}
+			});
+		};
+
+		simpleSl.prev = () => {
+			let idx = simpleSl.currentIdx - 1;
+			if (simpleSl.currentIdx === 0) {
+				idx = simpleSl.gallery.length - 1;
+			}
+			simpleSl.setImg(idx);
+			simpleSl.currentIdx = idx;
+		};
+
+		simpleSl.next = () => {
+			let idx = simpleSl.currentIdx + 1;
+			if (simpleSl.currentIdx === simpleSl.gallery.length - 1) {
+				idx = 0;
+			}
+			simpleSl.setImg(idx);
+			simpleSl.currentIdx = idx;
+		};
+
+		simpleSl.drawButtons();
+		simpleSl.setImg(0);
+
+		return simpleSl;
+	};
+
+	document.addEventListener("DOMContentLoaded", function () {
+		const slider = sliderJs(designProjects);
+		const simpleSlider = simpleSliderJs(designImages);
+	});
+</script>

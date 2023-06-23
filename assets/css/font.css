@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital@0;1&family=Yeseva+One&display=swap");
+
+@font-face {
+	font-family: "NuniSans";
+	font-weight: 400;
+	src: local("Nunito Sans"),
+		url("/assets/fonts/Nunito_Sans/static/NunitoSans_10pt-Regular.ttf")
+			format("truetype");
+}
+
+@font-face {
+	font-family: "NuniSansBold";
+	font-weight: 700;
+	src: local("Nunito Sans"),
+		url("/assets/fonts/Nunito_Sans/static/NunitoSans_10pt-Italic.ttf")
+			format("truetype");
+}
+
+@font-face {
+	font-family: "YesevaOne";
+	src: local("Yeseva One"),
+		url("/assets/fonts/Yeseva_One/YesevaOne-Regular.ttf") format("truetype");
+}
