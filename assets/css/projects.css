@@ -3,6 +3,8 @@
 	width: 1171px;
 	padding-top: 100px;
 	padding-bottom: 227px;
+	visibility: hidden;
+	transition: visibility 0.5s;
 }
 
 .projects__info-gallery > * {

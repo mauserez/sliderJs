@@ -73,12 +73,12 @@
 											</div>
 											<div class="projects__big-slider-buttons color-white">
 												<img
-													onclick="slider.prev()"
+													class="bg-slider-prev"
 													src="/assets/icons/big_slider/prev.svg"
 												/>
 												<div class="projects__big-slider-dots"></div>
 												<img
-													onclick="slider.next()"
+													class="bg-slider-next"
 													src="/assets/icons/big_slider/next.svg"
 												/>
 											</div>
@@ -166,9 +166,13 @@
 		},
 	];
 
+	//Слайдер посложнее
 	const sliderJs = (options) => {
 		let sl = {};
 		const galleryPhoto = document.querySelector(".projects__gallery-photo");
+		const buttonsContainer = document.querySelector(
+			".projects__big-slider-buttons"
+		);
 		const dotsContainer = document.querySelector(".projects__big-slider-dots");
 		const projectsButtons = document.querySelector(".projects__buttons");
 		const projectText = document.querySelector(".projects__text");
@@ -181,6 +185,8 @@
 			".projects__project-repair-cost"
 		);
 
+		sl.prevBtn = document.querySelector(".bg-slider-prev");
+		sl.nextBtn = document.querySelector(".bg-slider-next");
 		sl.options = options;
 
 		sl.currentProject = options[0];
@@ -279,6 +285,10 @@
 			sl.currentIndex = idx;
 		};
 
+		sl.prevBtn.addEventListener("click", () => {
+			sl.prev();
+		});
+
 		sl.next = () => {
 			let idx = sl.currentIndex + 1;
 			if (sl.currentIndex === sl.currentGallery.length - 1) {
@@ -289,6 +299,10 @@
 			sl.currentIndex = idx;
 		};
 
+		sl.nextBtn.addEventListener("click", () => {
+			sl.next();
+		});
+
 		sl.drawProjectsButtons();
 		sl.setProjectOptions();
 		sl.setGalleryImg(0);
@@ -297,6 +311,7 @@
 		return sl;
 	};
 
+	//Простой слайдер
 	const simpleSliderJs = (images) => {
 		let simpleSl = {};
 		const galleryPhotoSm = document.querySelector(".projects__small-gallery");
@@ -365,6 +380,9 @@
 	};
 
 	document.addEventListener("DOMContentLoaded", function () {
+		const projectsBlock = (document.querySelector(
+			".projects"
+		).style.visibility = "visible");
 		const slider = sliderJs(designProjects);
 		const simpleSlider = simpleSliderJs(designImages);
 	});
