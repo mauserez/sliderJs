@@ -7,6 +7,13 @@
 	transition: visibility 0.5s;
 }
 
+.projects__info {
+	min-height: 520px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
 .projects__info-gallery > * {
 	display: grid;
 	grid-template-columns: 442px 1fr;
