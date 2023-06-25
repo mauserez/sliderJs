@@ -102,7 +102,6 @@
 
 			<script>
 				let scroller = document.getElementById("scroll-top");
-
 				window.addEventListener("scroll", (e) => {
 					scroller.style.opacity = window.scrollY > 1000 ? "100" : "0";
 				});
@@ -110,14 +109,8 @@
 		</main>
 	</body>
 </html>
-
+<script src="/assets/js/sliders.js"></script>
 <script>
-	let designImages = [
-		"rostov-admiral-1.png",
-		"rostov-admiral-2.png",
-		"rostov-admiral-3.png",
-	];
-
 	let designProjects = [
 		{
 			projectId: "rostov_admiral",
@@ -127,263 +120,42 @@
 				city: `Rostov-on-Dons <br /> LCD admiral`,
 				repairTime: "2.5 months",
 				repairCost: "3000 $",
-				description: `The Rostov Admiral is very comfortable hotel!<br/>
-			For 14 years on in the construction market we have made happy more than 1000 families`,
+				description: `The Rostov Admiral is very comfortable hotel.<br/> For 14 years on in the construction market we have made happy more than 1000 families`,
 			},
-			images: [
-				"rostov-admiral-1.png",
-				"rostov-admiral-2.png",
-				"rostov-admiral-3.png",
-			],
+			image: "rostov-admiral-1.png",
 		},
 		{
 			projectId: "sochi-thieves",
 			projectName: "Sochi Thieves",
-
 			projectOptions: {
 				size: "101 m2",
 				city: "Sochi <br /> Thieves",
 				repairTime: "1.5 months",
 				repairCost: "Upon request",
-				description: `Only a small part of the work performed by our company is presented on the site.
-			For 14 years on in the construction market we have made happy more than 1000 families`,
+				description: `Only a small part of the work performed by our company is presented on the site.<br /> For 14 years on in the construction market we have made happy more than 1000 families`,
 			},
-			images: ["rostov-patriotic-1.png", "rostov-admiral-2.png"],
+			image: "rostov-patriotic-1.png",
 		},
 		{
 			projectId: "rostov_patriotic",
 			projectName: "Rostov-on-Don Patriotic",
-
 			projectOptions: {
 				size: "102 m2",
 				city: "Rostov-on-Don <br /> Patriotic",
 				repairTime: "4 months",
 				repairCost: "Upon request",
-				description: `The Rostov Patriotic is very comfortable hotel.
-			For 28 years on in the construction market we have made happy more than 1000 families`,
+				description: `The Rostov Patriotic is very comfortable hotel.<br /> For 28 years on in the construction market we have made happy more than 1000 families`,
 			},
-			images: ["sochi-1.png", "sochi-2.png"],
+			image: "sochi-1.png",
 		},
 	];
-
-	//Слайдер посложнее
-	const sliderJs = (options) => {
-		let sl = {};
-		const galleryPhoto = document.querySelector(".projects__gallery-photo");
-		const buttonsContainer = document.querySelector(
-			".projects__big-slider-buttons"
-		);
-		const dotsContainer = document.querySelector(".projects__big-slider-dots");
-		const projectsButtons = document.querySelector(".projects__buttons");
-		const projectText = document.querySelector(".projects__text");
-		const projectCity = document.querySelector(".projects__project-city");
-		const projectSize = document.querySelector(".projects__project-size");
-		const projectRepairTime = document.querySelector(
-			".projects__project-repair-time"
-		);
-		const projectRepaiCost = document.querySelector(
-			".projects__project-repair-cost"
-		);
-
-		sl.prevBtn = document.querySelector(".bg-slider-prev");
-		sl.nextBtn = document.querySelector(".bg-slider-next");
-		sl.options = options;
-
-		sl.currentProject = options[0];
-		sl.currentIndex = 0;
-		sl.currentGallery = sl.currentProject.images;
-		sl.dots = [];
-
-		sl.setCurrentGallery = () => {
-			sl.currentGallery = sl.currentProject.images;
-		};
-
-		sl.drawProjectsButtons = () => {
-			let projectsButtonsHtml = "";
-			sl.options.forEach((element, idx) => {
-				projectsButtonsHtml += `<div
-				class="projects__button
-				${idx === 0 ? "projects__button-active" : ""}
-				">
-					${element.projectId}
-				</div>`;
-				projectsButtons.innerHTML = projectsButtonsHtml;
-
-				sl.projectsButtons = document.querySelectorAll(".projects__button");
-				Array.from(sl.projectsButtons).forEach(function (el, idx) {
-					el.addEventListener("click", () => {
-						sl.setActiveProject(el, idx);
-					});
-				});
-			});
-		};
-
-		sl.setActiveProject = (el, idx) => {
-			[...el.parentElement.children].forEach((sib) =>
-				sib.classList.remove("projects__button-active")
-			);
-			el.classList.add("projects__button-active");
-			sl.currentProject = options[idx];
-
-			sl.setCurrentGallery();
-			sl.setProjectOptions();
-			sl.setGalleryImg(0);
-			sl.drawDots();
-		};
-
-		sl.setProjectOptions = () => {
-			projectText.innerHTML = sl.currentProject.projectOptions.description;
-			projectSize.innerHTML = sl.currentProject.projectOptions.size;
-			projectCity.innerHTML = sl.currentProject.projectOptions.city;
-			projectRepairTime.innerHTML = sl.currentProject.projectOptions.repairTime;
-			projectRepaiCost.innerHTML = sl.currentProject.projectOptions.repairCost;
-		};
-
-		sl.setGalleryImg = (index) => {
-			galleryPhoto.style.backgroundImage = `url(/assets/img/gallery/${sl.currentGallery[index]})`;
-		};
-
-		sl.drawDots = () => {
-			dotsContainer.innerHTML = "";
-			let dotsHtml = "";
-
-			if (sl.currentGallery.length > 1) {
-			}
-
-			sl.currentGallery.forEach((element, index) => {
-				let activeDot =
-					index === sl.currentIndex ? "projects__big-slider-dot-active" : "";
-
-				dotsHtml += `<div data-idx="${index}" class="projects__big-slider-dot ${activeDot}"></div>`;
-			});
-
-			dotsContainer.innerHTML = dotsHtml;
-
-			sl.dots = document.querySelectorAll(".projects__big-slider-dot");
-			Array.from(sl.dots).forEach(function (el, idx) {
-				el.addEventListener("click", () => {
-					sl.setActiveDot(el);
-					sl.setGalleryImg(idx);
-				});
-			});
-		};
-
-		sl.setActiveDot = (el) => {
-			[...el.parentElement.children].forEach((sib) =>
-				sib.classList.remove("projects__big-slider-dot-active")
-			);
-			el.classList.add("projects__big-slider-dot-active");
-		};
-
-		sl.prev = () => {
-			let idx = sl.currentIndex - 1;
-			if (sl.currentIndex === 0) {
-				idx = sl.currentGallery.length - 1;
-			}
-			sl.setActiveDot(sl.dots[idx]);
-			sl.setGalleryImg(idx);
-			sl.currentIndex = idx;
-		};
-
-		sl.prevBtn.addEventListener("click", () => {
-			sl.prev();
-		});
-
-		sl.next = () => {
-			let idx = sl.currentIndex + 1;
-			if (sl.currentIndex === sl.currentGallery.length - 1) {
-				idx = 0;
-			}
-			sl.setActiveDot(sl.dots[idx]);
-			sl.setGalleryImg(idx);
-			sl.currentIndex = idx;
-		};
-
-		sl.nextBtn.addEventListener("click", () => {
-			sl.next();
-		});
-
-		sl.drawProjectsButtons();
-		sl.setProjectOptions();
-		sl.setGalleryImg(0);
-		sl.drawDots();
-
-		return sl;
-	};
-
-	//Простой слайдер
-	const simpleSliderJs = (images) => {
-		let simpleSl = {};
-		const galleryPhotoSm = document.querySelector(".projects__small-gallery");
-		simpleSl.currentImg = 0;
-		simpleSl.currentIdx = images[simpleSl.currentIdx];
-		simpleSl.gallery = images;
-
-		simpleSl.setImg = (idx) => {
-			simpleSl.currentImg = images[idx];
-			simpleSl.currentIdx = idx;
-			galleryPhotoSm.style.backgroundImage = `url(/assets/img/gallery/${simpleSl.gallery[idx]})`;
-		};
-
-		simpleSl.drawButtons = () => {
-			let hiddenButton = "";
-
-			if (simpleSl.gallery.length === 1) {
-				hiddenButton = "hidden";
-			}
-
-			let buttonsHtml = `<img class="slider-icon sm-slider-prev prev ${hiddenButton}" alt="Предыдущая картинка"
-						 	src="/assets/icons/small_slider/prev.svg"/>
-							<img class="slider-icon sm-slider-next next ${hiddenButton}" alt="Следующая картинка"
-							src="/assets/icons/small_slider/next.svg"/>`;
-
-			galleryPhotoSm.innerHTML = buttonsHtml;
-			simpleSl.buttons = document.querySelectorAll(
-				".sm-slider-prev,.sm-slider-next"
-			);
-			console.log(simpleSl.buttons);
-			Array.from(simpleSl.buttons).forEach(function (el, idx) {
-				if (el.classList.contains("sm-slider-prev")) {
-					el.addEventListener("click", () => {
-						simpleSl.prev();
-					});
-				} else {
-					el.addEventListener("click", () => {
-						simpleSl.next();
-					});
-				}
-			});
-		};
-
-		simpleSl.prev = () => {
-			let idx = simpleSl.currentIdx - 1;
-			if (simpleSl.currentIdx === 0) {
-				idx = simpleSl.gallery.length - 1;
-			}
-			simpleSl.setImg(idx);
-			simpleSl.currentIdx = idx;
-		};
-
-		simpleSl.next = () => {
-			let idx = simpleSl.currentIdx + 1;
-			if (simpleSl.currentIdx === simpleSl.gallery.length - 1) {
-				idx = 0;
-			}
-			simpleSl.setImg(idx);
-			simpleSl.currentIdx = idx;
-		};
-
-		simpleSl.drawButtons();
-		simpleSl.setImg(0);
-
-		return simpleSl;
-	};
 
 	document.addEventListener("DOMContentLoaded", function () {
 		const projectsBlock = (document.querySelector(
 			".projects"
 		).style.visibility = "visible");
+
 		const slider = sliderJs(designProjects);
-		const simpleSlider = simpleSliderJs(designImages);
+		const simpleSlider = smSliderJs(designProjects);
 	});
 </script>
